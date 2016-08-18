@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptPreivsaoRecebimento" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c83c9838-edc8-4c2e-b930-51371782492b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="dtVctoInicial" class="java.util.Date"/>
+	<parameter name="dtVctoFinal" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     duplicata.`dup_numero` AS duplicata_dup_numero,
+     duplicata.`dup_dtEmissao` AS duplicata_dup_dtEmissao,
+     duplicata.`dup_dtVcto` AS duplicata_dup_dtVcto,
+     duplicata.`dup_valor` AS duplicata_dup_valor,
+     duplicata.`dup_saldo` AS duplicata_dup_saldo,
+     cliente.`cli_nome` AS cliente_cli_nome
+FROM
+     duplicata
+INNER JOIN cliente on duplicata.cli_id = cliente.cli_id
+
+where (duplicata.dup_saldo > 0) and (duplicata.dup_dtVcto between $P{dtVctoInicial} and $P{dtVctoFinal})]]>
+	</queryString>
+	<field name="duplicata_dup_numero" class="java.lang.String"/>
+	<field name="duplicata_dup_dtEmissao" class="java.sql.Date"/>
+	<field name="duplicata_dup_dtVcto" class="java.sql.Date"/>
+	<field name="duplicata_dup_valor" class="java.lang.Double"/>
+	<field name="duplicata_dup_saldo" class="java.lang.Double"/>
+	<field name="cliente_cli_nome" class="java.lang.String"/>
+	<variable name="TotalValor" class="java.lang.Double" incrementType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{duplicata_dup_valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSaldo" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{duplicata_dup_saldo}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="164" height="126" uuid="d1fc5bb4-4f50-46ea-a748-bc77bed095c3"/>
+				<imageExpression><![CDATA["originalita.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="170" y="0" width="263" height="62" uuid="12976152-2662-4e6a-be6e-98e2c771b5bf"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Financeiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="219" y="62" width="196" height="22" uuid="b7287001-9b86-4ae8-bf23-c32a347201b2"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Previsão de Recebimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="84" width="16" height="20" uuid="05d203f4-fb57-4f26-91c1-5d0d17336fed"/>
+				<text><![CDATA[de ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="246" y="84" width="84" height="20" uuid="52508831-6ba3-49b2-b2d2-8d8ae4b13152"/>
+				<textFieldExpression><![CDATA[$P{dtVctoInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="84" width="17" height="20" uuid="080803b7-a88b-4a19-88f0-a97a0094e3b3"/>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="347" y="84" width="86" height="20" uuid="f3fee810-be22-41f2-8baf-afb617fa699e"/>
+				<textFieldExpression><![CDATA[$P{dtVctoFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="e920d7bf-f8c2-4a3e-8de9-1a2e24308955"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="1" y="0" width="92" height="15" forecolor="#736343" uuid="b2efe523-ccc3-4d47-be21-e5712c3deaac"/>
+				<text><![CDATA[Duplicata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="105" y="1" width="59" height="15" forecolor="#736343" uuid="630a8c6b-ae06-486c-a893-e9a17e984247"/>
+				<text><![CDATA[Emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="184" y="0" width="72" height="15" forecolor="#736343" uuid="4d39b7f5-35fb-4cb4-99eb-007b32a3e396"/>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="276" y="0" width="54" height="15" forecolor="#736343" uuid="c4d22d94-23ca-463f-9100-c1b900134e1f"/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="368" y="0" width="64" height="15" forecolor="#736343" uuid="9e4f3588-c7cb-4047-94dc-f8ff066b40ea"/>
+				<text><![CDATA[Saldo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="460" y="0" width="92" height="15" forecolor="#736343" uuid="ae0a1be3-9837-40e4-bfa9-3d9307cebe63"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="826f4ae2-d34b-4a84-84c8-a6221bbf2086"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="19" y="0" width="73" height="15" uuid="4d467c1c-7ca9-4ee4-b996-3f3a64cd5c71"/>
+					<textFieldExpression><![CDATA[$F{duplicata_dup_numero}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement style="Detail" x="106" y="0" width="64" height="15" uuid="6eb972f1-6fb4-4d01-a0df-b565343a868b"/>
+					<textFieldExpression><![CDATA[$F{duplicata_dup_dtEmissao}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement style="Detail" x="184" y="0" width="62" height="15" uuid="8b65cad5-045b-4188-ab3a-c045d6f0077e"/>
+					<textFieldExpression><![CDATA[$F{duplicata_dup_dtVcto}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+					<reportElement style="Detail" x="276" y="0" width="54" height="15" uuid="67c6aa89-d101-4d4c-817f-0a17a18b95c6"/>
+					<textFieldExpression><![CDATA[$F{duplicata_dup_valor}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+					<reportElement style="Detail" x="368" y="0" width="64" height="15" uuid="dd7f4bbc-e640-41aa-a305-869a3da2619a"/>
+					<textFieldExpression><![CDATA[$F{duplicata_dup_saldo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="460" y="0" width="92" height="15" uuid="db7ecbde-66cf-45b7-bc64-b3dee6bc5e83"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cliente_cli_nome}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="cbf96394-2261-4f2f-a364-602bea498334"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="219" y="3" width="48" height="20" uuid="2b576e04-c466-4334-8c69-0cfce3e68eff"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[>>>Total: ]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="276" y="4" width="71" height="20" uuid="36eac663-e3c0-4840-a61f-178a97fb7e38"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalValor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="368" y="3" width="100" height="20" uuid="80589ccc-7cd6-41f8-b2ca-f60de0167a7f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalSaldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="7613dad0-6ab3-4f0f-8d46-48ba8dae11d4"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="ad3a5d1b-f65f-43e7-8ab8-60d625a9ef4d"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="436" y="0" width="97" height="20" forecolor="#736343" uuid="519a0403-f2ea-4c5e-af43-ca2dd9f13402"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="13aa1202-f278-49c4-a35f-28dce7547c1f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
