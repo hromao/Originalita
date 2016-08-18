@@ -79,12 +79,12 @@ public class frmClientes extends javax.swing.JInternalFrame {
             DefaultFormatterFactory ddfCnpj = new DefaultFormatterFactory(mfCnpj);
             txtCnpj.setFormatterFactory(ddfCnpj);
             
-            if(dados != null){                
-                btnNovoActionPerformed(null);
+            if(dados != null){                                
                 txtNome.setText(dados.get("nome"));
                 txtTel.setText(dados.get("fone"));
                 txtEmail.setText(dados.get("email"));
                 txtContato.setText(dados.get("contato"));
+                btnNovoActionPerformed(null);
             }
 
         } catch (Exception e) {
