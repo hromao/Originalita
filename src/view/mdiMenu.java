@@ -6,9 +6,6 @@ package view;
  */
 public class mdiMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form mdiMenu
-     */
     public mdiMenu() {
         initComponents();
     }
