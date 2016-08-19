@@ -24,7 +24,6 @@ public class ReadPropFile {
 
     public HashMap<String, String> readFile() {
         try {
-            //TODO arquivo recebido na var input esta null - ARRUMAR
             String arquivo = "config.properties";
             input = getClass().getClassLoader().getResourceAsStream(arquivo);
             if (input == null) {
