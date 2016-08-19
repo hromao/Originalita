@@ -22,8 +22,6 @@ public class ReadPropFile {
     private static InputStream input;
     private static HashMap<String, String> properties = new HashMap<>();
     
-    //GUILHERME
-
     public HashMap<String, String> readFile() {
         try {
             String arquivo = "config.properties";
