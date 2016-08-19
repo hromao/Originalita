@@ -11,9 +11,11 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Henrique
  */
 public class VisualizarRpt {
+    
+    private static Conexao conexao = new Conexao();
 
     public static void geraRelatorio(String arquivoRpt, Map parameter, String titulo) throws Exception {
-        Connection conn = Conexao.getConnection();
+        Connection conn = conexao.getConnection();
         JasperPrint jp = JasperFillManager.fillReport("lib/rpt/" + arquivoRpt, parameter, conn);
         JasperViewer viewer = new JasperViewer(jp, false);
         viewer.setTitle(titulo);

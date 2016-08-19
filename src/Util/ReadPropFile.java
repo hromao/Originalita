@@ -22,11 +22,11 @@ public class ReadPropFile {
     private static InputStream input;
     private static HashMap<String, String> properties = new HashMap<>();
 
-    public static HashMap<String, String> readFile() {
+    public HashMap<String, String> readFile() {
         try {
             //TODO arquivo recebido na var input esta null - ARRUMAR
             String arquivo = "config.properties";
-            input = ReadPropFile.class.getClassLoader().getResourceAsStream(arquivo);
+            input = getClass().getClassLoader().getResourceAsStream(arquivo);
             if (input == null) {
                 return null;
             }

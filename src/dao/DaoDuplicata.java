@@ -19,6 +19,7 @@ public class DaoDuplicata extends Duplicata {
     Date dataEmissao = null;
     Date dataPgto = null;
     Date dataVcto = null;
+    Conexao conexao = new Conexao();
 
     @Override
     public void incluir() throws SQLException, ClassNotFoundException {
@@ -26,7 +27,7 @@ public class DaoDuplicata extends Duplicata {
                 + "dup_dtVcto, dup_dtPagamento, dup_valor, cli_id, dup_saldo, ped_id) "
                 + "VALUES "
                 + "(?,?,?,?,?,?,?,?,?)";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getDup_id());
         comando.setString(2, this.getDup_numero());
@@ -56,7 +57,7 @@ public class DaoDuplicata extends Duplicata {
                 + "cli_id=?,"
                 + "dup_saldo=? "
                 + "WHERE dup_id=?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, this.getDup_numero());
         dataEmissao = new Date(this.getDtEmissao().getTime());
@@ -78,7 +79,7 @@ public class DaoDuplicata extends Duplicata {
     public boolean excluir() throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM duplicata WHERE dup_id=?";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             comando.setInt(1, this.getDup_id());
             boolean apagou = comando.execute();
@@ -119,7 +120,7 @@ public class DaoDuplicata extends Duplicata {
         String sql = "SELECT dup_numero, dup_dtVcto, dup_valor FROM duplicata "
                 + "WHERE ped_id=?";
         ArrayList<DaoDuplicata> listaDup = new ArrayList<DaoDuplicata>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, id);
         ResultSet rs = comando.executeQuery();
@@ -154,7 +155,7 @@ public class DaoDuplicata extends Duplicata {
                 + "FROM duplicata "
                 + "INNER JOIN cliente ON duplicata.cli_id = cliente.cli_id";
         ArrayList<DaoDuplicata> listaDup = new ArrayList<>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         ResultSet rs = comando.executeQuery();
         while (rs.next()) {
@@ -183,7 +184,7 @@ public class DaoDuplicata extends Duplicata {
                 + "FROM duplicata "
                 + "INNER JOIN cliente ON duplicata.cli_id = cliente.cli_id "
                 + "WHERE dup_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, id);
         ResultSet rs = comando.executeQuery();
@@ -209,7 +210,7 @@ public class DaoDuplicata extends Duplicata {
                 + "FROM duplicata "
                 + "INNER JOIN cliente ON duplicata.cli_id = cliente.cli_id "
                 + "WHERE dup_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, id);
         ResultSet rs = comando.executeQuery();
@@ -237,7 +238,7 @@ public class DaoDuplicata extends Duplicata {
         String sql = "INSERT INTO duplicata (dup_id) VALUE (null)";
         String sqlSelect = "SELECT MAX(dup_id) AS ultimoId FROM duplicata";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             comando.execute();
             comando = conn.prepareStatement(sqlSelect);
@@ -257,7 +258,7 @@ public class DaoDuplicata extends Duplicata {
     @Override
     public void excluirUltimoId(int id) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM duplicata WHERE dup_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, id);
         comando.execute();
@@ -270,7 +271,7 @@ public class DaoDuplicata extends Duplicata {
                 + "dup_dtPagamento = ?,"
                 + "dup_saldo = ? "
                 + "WHERE dup_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setDate(1, dataPgto);
         comando.setDouble(2, this.getDup_saldo());
@@ -288,7 +289,7 @@ public class DaoDuplicata extends Duplicata {
                 + "INNER JOIN cliente ON duplicata.cli_id = cliente.cli_id "
                 + "WHERE duplicata.dup_numero LIKE ?";
         ArrayList<DaoDuplicata> listaDup = new ArrayList<>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, "%" + getDup_numero() + "%");
         ResultSet rs = comando.executeQuery();
@@ -319,7 +320,7 @@ public class DaoDuplicata extends Duplicata {
                 + "INNER JOIN cliente ON duplicata.cli_id = cliente.cli_id "
                 + "WHERE cliente.cli_nome LIKE ?";
         ArrayList<DaoDuplicata> listaDup = new ArrayList<>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, "%" + getCli_nome() + "%");
         ResultSet rs = comando.executeQuery();

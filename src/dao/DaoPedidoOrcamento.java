@@ -17,6 +17,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
     private Connection conn = null;
     private PreparedStatement comando = null;
     Date dataVenda = null, dataEntrega = null;
+    Conexao conexao = new Conexao();
 
     @Override
     public void incluir() throws SQLException, ClassNotFoundException {
@@ -26,7 +27,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "ped_tipo, ped_orcNome, ped_orcFone, ped_orcEmail, ped_orcContato) "
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         //comando.setInt(1, this.getPed_id());
         comando.setInt(1, this.getPed_num());
@@ -79,7 +80,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "ped_orcContato=? "
                 + "WHERE ped_id=?";
 
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPed_num());
         dataVenda = new Date(this.getDt_venda().getTime());
@@ -111,7 +112,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
     public boolean excluir() throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM pedido WHERE ped_id=?";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             comando.setInt(1, getPed_id());
             boolean apagou = comando.execute();
@@ -132,7 +133,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
         String sql = "INSERT INTO pedido (ped_id) VALUE (null)";
         String sqlSelect = "SELECT MAX(ped_id) AS ultimoId FROM pedido";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             comando.execute();
             comando = conn.prepareStatement(sqlSelect);
@@ -152,7 +153,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
     @Override
     public void excluirUltimoId(int id) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM pedido WHERE ped_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, id);
         comando.execute();
@@ -167,7 +168,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "pedido.ped_orcNome, pedido.ped_orcFone, pedido.ped_orcEmail, pedido.ped_orcContato "
                 + "FROM pedido INNER JOIN cliente ON pedido.cli_id = cliente.cli_id "
                 + "WHERE ped_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPed_id());
         ResultSet rs = comando.executeQuery();
@@ -201,7 +202,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
         String sql = "SELECT pedido.stp_codigo, status_pedido.stp_nome "
                 + "FROM pedido INNER JOIN status_pedido ON pedido.stp_codigo = status_pedido.stp_codigo "
                 + "WHERE ped_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, getPed_id());
         ResultSet rs = comando.executeQuery();
@@ -217,7 +218,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "FROM pedido INNER JOIN pedido ON pedido.cli_id = cliente.cli_id"
                 + "WHERE ped_id = ?"
                 + "";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, getPed_id());
         ResultSet rs = comando.executeQuery();
@@ -232,7 +233,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
         String sql = "SELECT cli_cod, cli_endereco, cli_numero, cli_comple, cli_bairro, cli_cidade, cli_uf "
                 + "FROM cliente WHERE cli_cod = ?";
         ArrayList<DaoPedidoOrcamento> listaPedido = new ArrayList<DaoPedidoOrcamento>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, clienteRetorno.getCod_cli());
         ResultSet rs = comando.executeQuery();
@@ -262,7 +263,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "WHERE ped_tipo = ?";
 
         ArrayList<DaoPedidoOrcamento> listaPedido = new ArrayList<>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, tipo);
         ResultSet rs = comando.executeQuery();
@@ -288,7 +289,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
         String sql = "UPDATE pedido SET "
                 + "stp_codigo=? "
                 + "WHERE ped_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, stpCod);
         comando.setInt(2, id);
@@ -302,7 +303,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "ped_total=? "
                 + "WHERE ped_id=?";
 
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setDouble(1, this.getPed_total());
         comando.setInt(2, this.getPed_id());
@@ -315,7 +316,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
     public boolean verificaDuplicata() throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM duplicata WHERE ped_id = ?";
         boolean existeDup;
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPed_id());
         ResultSet rs = comando.executeQuery();
@@ -339,7 +340,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "WHERE pedido.ped_num = ? AND pedido.ped_tipo = ?";
 
         ArrayList<DaoPedidoOrcamento> listaPedidos = new ArrayList<DaoPedidoOrcamento>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, getPed_num());
         comando.setString(2, getPed_tipo());
@@ -373,7 +374,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "WHERE cliente.cli_nome LIKE ? AND pedido.ped_tipo = ?";
 
         ArrayList<DaoPedidoOrcamento> listaPedidos = new ArrayList<DaoPedidoOrcamento>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, "%" + getCli_nome() + "%");
         comando.setString(2, getPed_tipo());
@@ -403,7 +404,7 @@ public class DaoPedidoOrcamento extends PedidosOrc {
                 + "ped_tipo = ? "
                 + "WHERE ped_id=?";
 
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, this.getPed_tipo());
         comando.setInt(2, this.getPed_id());

@@ -17,13 +17,14 @@ public class DaoProduto extends Produtos {
     private Connection conn = null;
     private PreparedStatement comando = null;
     Date data = null;
+    Conexao conexao = new Conexao();
 
     @Override
     public void incluir() throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO produto (pro_id, pro_cod, pro_nome, pro_preco,"
                 + "pro_pesoLiq, pro_pesoBruto, pro_ativo, pro_sdAtual, pro_dataCadastro, pro_infoComple)"
                 + "VALUES (?,?,?,?,?,?,?,?,?,?)";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
 
         comando.setInt(1, this.getPro_id());
@@ -54,7 +55,7 @@ public class DaoProduto extends Produtos {
                 + "pro_sdAtual=?,"
                 + "pro_infoComple=? "
                 + "WHERE pro_id=?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
 
         comando.setString(1, this.getPro_cod());
@@ -75,7 +76,7 @@ public class DaoProduto extends Produtos {
     public boolean excluir() throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM produto WHERE pro_id=?";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
 
             comando.setInt(1, this.getPro_id());
@@ -96,7 +97,7 @@ public class DaoProduto extends Produtos {
         int ultimoId = 0;
         String sql = "SELECT MAX(pro_id) AS ultimoID FROM produto";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             ResultSet rs = comando.executeQuery();
             if (rs.next()) {
@@ -116,7 +117,7 @@ public class DaoProduto extends Produtos {
         String sql = "SELECT * FROM produto WHERE pro_nome LIKE ?";
 
         ArrayList<DaoProduto> listaProdutos = new ArrayList<DaoProduto>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, "%" + produto.getPro_nome() + "%");
         ResultSet rs = comando.executeQuery();
@@ -144,7 +145,7 @@ public class DaoProduto extends Produtos {
         String sql = "SELECT * FROM produto WHERE pro_cod LIKE ?";
 
         ArrayList<DaoProduto> listaProdutos = new ArrayList<DaoProduto>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, "%" + produto.getPro_cod() + "%");
         ResultSet rs = comando.executeQuery();
@@ -171,7 +172,7 @@ public class DaoProduto extends Produtos {
         DaoProduto produtoRetorno = null;
         String sql = "SELECT * FROM produto WHERE pro_id = ?";
         ArrayList<DaoProduto> listaProdutos = new ArrayList<DaoProduto>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, getPro_id());
         ResultSet rs = comando.executeQuery();

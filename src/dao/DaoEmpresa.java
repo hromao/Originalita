@@ -16,6 +16,7 @@ public class DaoEmpresa extends Configuracoes {
     private Connection conn = null;
     private PreparedStatement comando = null;
     Date dataVenda = null, dataEntrega = null;
+    Conexao conexao = new Conexao();
 
     @Override
     public void alterar() throws SQLException, ClassNotFoundException {
@@ -36,7 +37,7 @@ public class DaoEmpresa extends Configuracoes {
                 + "emp_mensagem=?,"
                 + "emp_cep=?  "
                 + "WHERE emp_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, this.getEmp_razao());
         comando.setString(2, this.getEmp_nome());
@@ -65,7 +66,7 @@ public class DaoEmpresa extends Configuracoes {
         String sql = "INSERT INTO empresa (emp_id) VALUE (null)";
         String sqlSelect = "SELECT MAX(emp_id) AS ultimoId FROM empresa";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             comando.execute();
             comando = conn.prepareStatement(sqlSelect);
@@ -85,7 +86,7 @@ public class DaoEmpresa extends Configuracoes {
     @Override
     public void excluirUltimoId(int id) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM empresa WHERE emp_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, id);
         comando.execute();
@@ -95,7 +96,7 @@ public class DaoEmpresa extends Configuracoes {
 
     public void retornaDadosEmpresa() throws SQLException, ClassNotFoundException {
         String sql = "SELECT emp_razaoSocial, emp_cnpj, emp_conta, emp_digConta, emp_agencia, emp_digAgencia FROM empresa";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         ResultSet rs = comando.executeQuery();
         if (rs.next()) {

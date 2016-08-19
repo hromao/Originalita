@@ -15,13 +15,14 @@ public class DaoItemPedido extends Item_Pedido {
 
     private Connection conn = null;
     private PreparedStatement comando = null;
+    Conexao conexao = new Conexao();
 
     @Override
     public void incluir() throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO item_pedido (ped_id, pro_id, quantidade, preco, val_total) "
                 + "VALUES (?,?,?,?,?)";
 
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPed_id());
         comando.setInt(2, this.getPro_id());
@@ -41,7 +42,7 @@ public class DaoItemPedido extends Item_Pedido {
                 + "preco=?,"
                 + "val_total=? "
                 + "WHERE ped_id=? AND pro_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPro_id());
         comando.setInt(2, this.getQuantidade());
@@ -57,11 +58,11 @@ public class DaoItemPedido extends Item_Pedido {
     public boolean excluir() throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM item_pedido WHERE ped_id = ?";
 
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPed_id());
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
 
             comando.setInt(1, this.getPed_id());
@@ -84,7 +85,7 @@ public class DaoItemPedido extends Item_Pedido {
                 + "preco=?,"
                 + "val_total=? "
                 + "WHERE ped_id=? AND pro_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPro_id());
         comando.setInt(2, this.getQuantidade());
@@ -99,7 +100,7 @@ public class DaoItemPedido extends Item_Pedido {
     
     public void deleteItensPedido() throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM item_pedido WHERE ped_id = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPed_id());
         comando.execute();
@@ -114,7 +115,7 @@ public class DaoItemPedido extends Item_Pedido {
                 + "INNER JOIN produto ON item_pedido.pro_id = produto.pro_id "
                 + "WHERE ped_id = ?";
         ArrayList<DaoItemPedido> listaItem = new ArrayList<>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, id);
         ResultSet rs = comando.executeQuery();
@@ -137,7 +138,7 @@ public class DaoItemPedido extends Item_Pedido {
     public boolean excluirItem() throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM item_pedido WHERE ped_id = ? AND pro_id = ? ";
 
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getPed_id());
         comando.setInt(2, this.getPro_id());
@@ -155,7 +156,7 @@ public class DaoItemPedido extends Item_Pedido {
     public int retornaProId(String cod) throws SQLException, ClassNotFoundException {
         String sql = "SELECT pro_id FROM produto WHERE pro_cod=?";
         int id = 0;
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, cod);
         ResultSet rs = comando.executeQuery();

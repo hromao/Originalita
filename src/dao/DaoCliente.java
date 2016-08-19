@@ -17,6 +17,7 @@ public class DaoCliente extends Clientes {
     private Connection conn = null;
     private PreparedStatement comando = null;
     Date data = null;
+    Conexao conexao = new Conexao();
 
     @Override
     public void incluir() throws SQLException, ClassNotFoundException {
@@ -25,7 +26,7 @@ public class DaoCliente extends Clientes {
                 + " cli_email, cli_tel, cli_contato, cli_ativo, cli_dataCadastro)"
                 + "VALUES "
                 + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, this.getId_cli());
         comando.setString(2, this.getCod_cli());
@@ -68,7 +69,7 @@ public class DaoCliente extends Clientes {
                 + "cli_contato=?,"
                 + "cli_ativo=? "
                 + "WHERE cli_id=?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, this.getNome_cli());
         comando.setString(2, this.getEndereco_cli());
@@ -95,7 +96,7 @@ public class DaoCliente extends Clientes {
         String sql = "DELETE FROM cliente WHERE cli_id=?";
 
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             comando.setInt(1, this.getId_cli());
             boolean apagou = comando.execute();
@@ -115,7 +116,7 @@ public class DaoCliente extends Clientes {
         int ultimoId = 0;
         String sql = "SELECT MAX(cli_id) AS ultimoID FROM cliente";
         try {
-            this.conn = Conexao.getConnection();
+            this.conn = conexao.getConnection();
             comando = conn.prepareStatement(sql);
             ResultSet rs = comando.executeQuery();
             if (rs.next()) {
@@ -135,7 +136,7 @@ public class DaoCliente extends Clientes {
         String sql = "SELECT * FROM cliente WHERE cli_nome LIKE ?";
 
         ArrayList<DaoCliente> listaClientes = new ArrayList<DaoCliente>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, "%" + cliente.getNome_cli() + "%");
         ResultSet rs = comando.executeQuery();
@@ -170,7 +171,7 @@ public class DaoCliente extends Clientes {
         String sql = "SELECT * FROM cliente WHERE cli_cod LIKE ?";
 
         ArrayList<DaoCliente> listaClientes = new ArrayList<DaoCliente>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, "%" + getCod_cli() + "%");
         ResultSet rs = comando.executeQuery();
@@ -204,7 +205,7 @@ public class DaoCliente extends Clientes {
         DaoCliente clienteRetorno = null;
         String sql = "SELECT * FROM cliente WHERE cli_id = ?";
         ArrayList<DaoCliente> listaClientes = new ArrayList<DaoCliente>();
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setInt(1, getId_cli());
         ResultSet rs = comando.executeQuery();

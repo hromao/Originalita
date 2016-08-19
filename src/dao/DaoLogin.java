@@ -14,11 +14,12 @@ public class DaoLogin extends Login {
 
     private Connection conn = null;
     private PreparedStatement comando = null;
+    Conexao conexao = new Conexao();
 
     public boolean login(String usu, String senha) throws SQLException, ClassNotFoundException {
         boolean login = false;
         String sql = "SELECT * FROM usuario WHERE usu_login = ? AND usu_senha = ?";
-        this.conn = Conexao.getConnection();
+        this.conn = conexao.getConnection();
         comando = conn.prepareStatement(sql);
         comando.setString(1, usu);
         comando.setString(2, senha);
