@@ -21,6 +21,7 @@ public class ReadPropFile {
     private static Properties prop = new Properties();
     private static InputStream input;
     private static HashMap<String, String> properties = new HashMap<>();
+    private Awesome minharola;
 
     public HashMap<String, String> readFile() {
         try {
