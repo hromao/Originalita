@@ -198,6 +198,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -226,20 +227,20 @@ public class frmPedidos extends javax.swing.JInternalFrame {
 
         tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Num Pedido", "Cliente", "Status", "Data Venda", "Data Entrega", "Total"
+                "ID", "Num Pedido", "Cliente", "Status", "Data Venda", "Data Entrega", "Total", "Num Orçamento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -336,7 +337,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
         painelTabela.setLayout(painelTabelaLayout);
         painelTabelaLayout.setHorizontalGroup(
             painelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(painelTabelaLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,7 +348,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelTabelaLayout.createSequentialGroup()
@@ -382,8 +383,9 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                     .addComponent(cmbPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelPedido.setPreferredSize(new java.awt.Dimension(1001, 451));
@@ -395,6 +397,8 @@ public class frmPedidos extends javax.swing.JInternalFrame {
         txtId.setEditable(false);
 
         jLabel2.setText("Num Pedido");
+
+        txtNumPed.setEditable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datas"));
 
@@ -454,7 +458,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -540,7 +544,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel12)
                                     .addComponent(txtUfEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 74, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21)
@@ -725,7 +729,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
         painelItens.setLayout(painelItensLayout);
         painelItensLayout.setHorizontalGroup(
             painelItensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
             .addGroup(painelItensLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelItensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -759,7 +763,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                         .addComponent(btnGravarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
                         .addComponent(btnCancelarItem)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         painelItensLayout.setVerticalGroup(
             painelItensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -864,7 +868,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
         );
         painelCobrancaLayout.setVerticalGroup(
             painelCobrancaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1059,7 +1063,10 @@ public class frmPedidos extends javax.swing.JInternalFrame {
         try {
             DaoPedidoOrcamento dped = new DaoPedidoOrcamento();
             int ultimoId = dped.pegaUltimaID();
+            int pedNum = dped.pegaUltimoNumPed(TIPO) + 1;
+            dped.setPed_num(pedNum);
             txtId.setText(String.valueOf(ultimoId));
+            txtNumPed.setText(String.valueOf(pedNum));
             txtDataVenda.setText(sdf.format(dataAtual));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um Erro no Banco de Dados" + e.getMessage(), "Erro:",
@@ -1285,7 +1292,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                     + " no banco de dados.",
                     "Atenção", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            String linha[] = new String[]{"", "", "", "", "", "", ""};
+            String linha[] = new String[]{"", "", "", "", "", "", "", ""};
             DefaultTableModel tbl = (DefaultTableModel) tblPedidos.getModel();
             try {
                 int posicao = -1;
@@ -1299,6 +1306,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
                     tbl.setValueAt(sdf.format(pedido.getDt_venda()), posicao, 4);
                     tbl.setValueAt(sdf.format(pedido.getDt_Entrega()), posicao, 5);
                     tbl.setValueAt(nfPreco.valueToString(pedido.getPed_total()), posicao, 6);
+                    tbl.setValueAt(pedido.getPed_orcNum(), posicao, 7);
                 }
                 tblPedidos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
                     @Override
@@ -1952,7 +1960,7 @@ public class frmPedidos extends javax.swing.JInternalFrame {
         DaoPedidoOrcamento p = new DaoPedidoOrcamento();
         ArrayList<DaoPedidoOrcamento> ListaPedidos;
         try {
-            ListaPedidos = p.retornaTodosPedidos(TIPO);
+            ListaPedidos = p.retornaTodosPedidos();
             atualizaTabela(ListaPedidos);
 
         } catch (SQLException e) {

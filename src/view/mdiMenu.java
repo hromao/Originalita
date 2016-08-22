@@ -1,5 +1,7 @@
 package view;
 
+import javax.swing.JDialog;
+
 /**
  *
  * @author Henrique
@@ -193,7 +195,7 @@ public class mdiMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClientesActionPerformed
-        frmClientes frmClientes1 = new frmClientes(null);
+        frmClientes frmClientes1 = new frmClientes();
         desktopPane.add(frmClientes1);
         frmClientes1.setVisible(true);
     }//GEN-LAST:event_menuClientesActionPerformed

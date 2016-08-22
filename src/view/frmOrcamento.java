@@ -8,6 +8,8 @@ import dao.DaoProduto;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -20,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -127,6 +130,8 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtObs = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
+        txtDataVenda = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
         tabBase = new javax.swing.JTabbedPane();
         painelItens = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -184,6 +189,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -326,8 +332,8 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addGroup(painelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(painelTabelaLayout.createSequentialGroup()
                         .addComponent(cmbPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,8 +364,9 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                     .addComponent(cmbPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelPedido.setPreferredSize(new java.awt.Dimension(1001, 451));
@@ -372,11 +379,15 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Número");
 
+        txtNumPed.setEditable(false);
+
         txtObs.setColumns(20);
         txtObs.setRows(5);
         jScrollPane3.setViewportView(txtObs);
 
         jLabel18.setText("Obs.");
+
+        jLabel3.setText("Data");
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
@@ -389,13 +400,14 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtNumPed, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                     .addComponent(txtId))
-                .addGap(396, 396, 396)
+                .addGap(133, 133, 133)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(txtDataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18)))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,13 +415,17 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
                         .addComponent(jLabel18)
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtDataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -511,7 +527,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
         painelItens.setLayout(painelItensLayout);
         painelItensLayout.setHorizontalGroup(
             painelItensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
             .addGroup(painelItensLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelItensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +561,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                         .addComponent(btnGravarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
                         .addComponent(btnCancelarItem)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         painelItensLayout.setVerticalGroup(
             painelItensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -570,7 +586,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                     .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
         );
 
         tabBase.addTab("Itens", painelItens);
@@ -780,7 +796,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                     .addComponent(btnPesqCliente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cliente com cadastro", painelCliente);
@@ -831,7 +847,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtContatoSCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cliente sem cadastro", jPanel1);
@@ -885,13 +901,13 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
             painelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(painelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(painelPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE))
+                .addComponent(painelPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE))
         );
         painelBaseLayout.setVerticalGroup(
             painelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(painelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(painelPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE))
+                .addComponent(painelPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -953,8 +969,12 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
     private void inicializaCampos() {
         try {
             DaoPedidoOrcamento dped = new DaoPedidoOrcamento();
+            int pedNum = dped.pegaUltimoNumPed(TIPO_ORCAMENTO) + 1;
+            dped.setPed_num(pedNum);
+            txtNumPed.setText(String.valueOf(pedNum));
             int ultimoId = dped.pegaUltimaID();
             txtId.setText(String.valueOf(ultimoId));
+            txtDataVenda.setText(sdf.format(dataAtual));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um Erro no Banco de Dados" + e.getMessage(), "Erro:",
                     JOptionPane.ERROR_MESSAGE);
@@ -1120,7 +1140,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                     posicao++;
                     tbl.addRow(linha);
                     tbl.setValueAt(pedido.getPed_id(), posicao, 0);
-                    tbl.setValueAt(pedido.getPed_num(), posicao, 1);
+                    tbl.setValueAt(pedido.getPed_orcNum(), posicao, 1);
                     tbl.setValueAt(pedido.getCli_nome(), posicao, 2);
                     tbl.setValueAt(pedido.getStp_nome(), posicao, 3);
                     tbl.setValueAt(sdf.format(pedido.getDt_venda()), posicao, 4);
@@ -1136,9 +1156,6 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
                         Object ref = table.getValueAt(row, 3);
                         if (ref != null && ref.equals("CANCELADO")) {
                             setBackground(Color.red);
-                            setForeground(Color.WHITE);
-                        } else if (ref != null && ref.equals("ENTREGUE")) {
-                            setBackground(Color.gray);
                             setForeground(Color.WHITE);
                         } else {
                             setBackground(Color.WHITE);
@@ -1308,14 +1325,10 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
             vizualizaDados();
             inicializaCampos();
 
-            //TODO Ver pq diabos eu estou puxando os itens e parcelas de um pedido AQUI!!!
             DaoItemPedido ditem = new DaoItemPedido();
             ArrayList<DaoItemPedido> ListaItens;
             ListaItens = ditem.retornaItensPedido(Integer.parseInt(txtId.getText()));
             atualizaTabelaItens(ListaItens);
-            DaoDuplicata ddup = new DaoDuplicata();
-            ArrayList<DaoDuplicata> ListaDup;
-            ListaDup = ddup.retornaItensPedido(Integer.parseInt(txtId.getText()));
             habilidaCamposItens(painelItens, false);
             cmbClienteActionPerformed(null);
             cmbProdutoActionPerformed(null);
@@ -1436,21 +1449,45 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
         int poslinha = tblOrcamento.getSelectedRow();
         if (poslinha > -1) {
             try {
-                //dped.atualizaStatus(1, (Integer) tblOrcamento.getValueAt(poslinha, 0));\                
+                //dped.atualizaStatus(1, (Integer) tblOrcamento.getValueAt(poslinha, 0));\
                 dped.setPed_id((Integer) tblOrcamento.getValueAt(poslinha, 0));
                 dped.retornaDadosPedido();
-                int cliId = dped.getCli_id();
-                if (cliId != -1) {
-                    dped.setPed_tipo(TIPO_PEDIDO);
-                    dped.geraPedOrc();
-                    formInternalFrameOpened(null);
-                }else{
-                    HashMap<String, String> dadosCli = new HashMap<String, String>();
-                    dadosCli.put("nome", dped.getPed_orcNome());
-                    dadosCli.put("fone", dped.getPed_orcFone());
-                    dadosCli.put("email", dped.getPed_orcEmail());
-                    dadosCli.put("contato", dped.getPed_orcContato());
-                    dlgGeraPedido.showDlgGeraPedido(dadosCli);
+                if (dped.getStp_codigo() == 2) {
+                    JOptionPane.showInternalMessageDialog(this, "Orçamento Cancelado!", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+
+                    int cliId = dped.getCli_id();
+                    if (cliId != -1) {
+                        int pedNum = dped.pegaUltimoNumPed(TIPO_PEDIDO) + 1;
+                        dped.setPed_num(pedNum);
+                        dped.setPed_tipo(TIPO_PEDIDO);
+                        dped.geraPedOrc();
+                        formInternalFrameOpened(null);
+                    } else {
+                        HashMap<String, String> dadosCli = new HashMap<String, String>();
+                        dadosCli.put("id", String.valueOf(dped.getPed_id()));
+                        dadosCli.put("nome", dped.getPed_orcNome());
+                        dadosCli.put("fone", dped.getPed_orcFone());
+                        dadosCli.put("email", dped.getPed_orcEmail());
+                        dadosCli.put("contato", dped.getPed_orcContato());
+                        dlgGeraPedido dlg = new dlgGeraPedido(dadosCli);
+                        dlg.addWindowListener(new WindowAdapter() {
+                            
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                DaoPedidoOrcamento p = new DaoPedidoOrcamento();
+                                ArrayList<DaoPedidoOrcamento> ListaPedidos;
+                                try {
+                                    ListaPedidos = p.retornaTodosOrcamentos();
+                                    atualizaTabela(ListaPedidos);
+                                } catch (Exception ex) {
+                                    JOptionPane.showMessageDialog(null, "Ocorreu um Erro no Banco de Dados" + ex.getMessage(), "Erro:",
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+
+                        });
+                    }
                 }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Ocorreu um Erro no Banco de Dados\n" + e.getMessage(), "Erro:",
@@ -1553,8 +1590,8 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
         try {
             Map parametros = new HashMap();
             String par1 = "", titulo = "", arquivo = "";
-            arquivo = "rptPedido.jasper";
-            titulo = "Pedido de Venda";
+            arquivo = "rptOrcamento.jasper";
+            titulo = "Orçamento de Venda";
             par1 = "pedId";
             parametros.put(par1, tblOrcamento.getValueAt(tblOrcamento.getSelectedRow(), 0));
             VisualizarRpt.geraRelatorio(arquivo, parametros, titulo);
@@ -1591,12 +1628,10 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         try {
-
-            //arrumar para orcamento
             DaoPedidoOrcamento dped = new DaoPedidoOrcamento();
             dped.setPed_id(Integer.parseInt(txtId.getText()));
             dped.setPed_tipo(TIPO_ORCAMENTO);
-            dped.setPed_num(Integer.parseInt(txtNumPed.getText()));
+            dped.setPed_orcNum(Integer.parseInt(txtNumPed.getText()));
             dped.setDt_venda(dataAtual);
             dped.setCli_id(listaCli.get(cmbCliente.getSelectedIndex()).getId_cli());
             dped.setCli_endereco(txtEnderecoEntrega.getText());
@@ -1673,7 +1708,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
         DaoPedidoOrcamento p = new DaoPedidoOrcamento();
         ArrayList<DaoPedidoOrcamento> ListaPedidos;
         try {
-            ListaPedidos = p.retornaTodosPedidos(TIPO_ORCAMENTO);
+            ListaPedidos = p.retornaTodosOrcamentos();
             atualizaTabela(ListaPedidos);
 
         } catch (SQLException e) {
@@ -1829,6 +1864,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1858,6 +1894,7 @@ public class frmOrcamento extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodCli;
     private javax.swing.JTextField txtCompleEntrega;
     private javax.swing.JTextField txtContatoSCad;
+    private javax.swing.JFormattedTextField txtDataVenda;
     private javax.swing.JTextField txtEmailSCad;
     private javax.swing.JTextField txtEnderecoEntrega;
     private javax.swing.JTextField txtId;

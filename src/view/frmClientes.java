@@ -25,9 +25,10 @@ public class frmClientes extends javax.swing.JInternalFrame {
     boolean incluir = false, editar = false;
     MaskFormatter mfTel, mfCep, mfUf, mfData, mfCnpj, mfCpf, mfNum;
     private int pesquisa = 0;
-
-    //Map utilizado quando o form e' chamado de form frmOrcamento para cadastro de novo cliente
-    public frmClientes(HashMap<String, String> dados) {
+    //Map filled by data by other form when a new register is required
+    static HashMap<String, String> dadosCliente;
+    
+    public frmClientes() {
         try {
             initComponents();
             mfUf = new MaskFormatter("UU");
@@ -51,13 +52,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
             mfTel.setValueClass(String.class);
             DefaultFormatterFactory ddfTel = new DefaultFormatterFactory(mfTel);
             txtTel.setFormatterFactory(ddfTel);
-
-            /*mfNum = new MaskFormatter("##########");
-             mfNum.setValueContainsLiteralCharacters(false);
-             mfNum.setValidCharacters("0123456789");
-             mfNum.setValueClass(String.class);
-             DefaultFormatterFactory ddfNum = new DefaultFormatterFactory(mfNum);
-             txtNumero.setFormatterFactory(ddfNum);*/
+            
             mfData = new MaskFormatter("##/##/####");
             mfData.setValueContainsLiteralCharacters(true);
             mfData.setPlaceholderCharacter('_');
@@ -78,14 +73,6 @@ public class frmClientes extends javax.swing.JInternalFrame {
             mfCnpj.setValueClass(String.class);
             DefaultFormatterFactory ddfCnpj = new DefaultFormatterFactory(mfCnpj);
             txtCnpj.setFormatterFactory(ddfCnpj);
-            
-            if(dados != null){                                
-                btnNovoActionPerformed(null);
-                txtNome.setText(dados.get("nome"));
-                txtTel.setText(dados.get("fone"));
-                txtEmail.setText(dados.get("email"));
-                txtContato.setText(dados.get("contato"));
-            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + e.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
@@ -873,6 +860,8 @@ public class frmClientes extends javax.swing.JInternalFrame {
                 dcli.alterar();
             }
             btnCancelarActionPerformed(null);
+            if(dadosCliente != null)
+                this.notifyAll();
 
             dcli.setNome_cli("");
             ArrayList<DaoCliente> ListaClientes;

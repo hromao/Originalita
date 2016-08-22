@@ -31,15 +31,17 @@ public class PedidosOrc implements ImetodosPadrao {
     private String ped_orcFone;
     private String ped_orcEmail;
     private String ped_orcContato;
+    private int ped_orcNum;
 
     public PedidosOrc() {
-        this(0, 0, new Date(), new Date(), 0, "", 0, "", 0, "", "", "", "", "", "", "", "", "", "", "", "", "");
+        this(0, 0, new Date(), new Date(), 0, "", 0, "", 0, "", "", "", "", "", "", "", "", "", "", "", "", "", 0);
     }
 
     public PedidosOrc(int ped_id, int ped_num, Date dt_venda, Date dt_Entrega, int cli_id,
             String cli_nome, double ped_total, String ped_obs, int stp_codigo, String stp_nome,
-            String cli_endereco, String cli_numero, String cli_comple, String cli_bairro, String cli_cidade, 
-            String cli_uf, String cli_cep, String ped_tipo, String ped_orcNome, String ped_orcFone,String ped_orcEmail,String ped_orcContato) {
+            String cli_endereco, String cli_numero, String cli_comple, String cli_bairro, String cli_cidade,
+            String cli_uf, String cli_cep, String ped_tipo, String ped_orcNome, String ped_orcFone, String ped_orcEmail, String ped_orcContato,
+            int ped_orcNum) {
         this.ped_id = ped_id;
         this.ped_num = ped_num;
         this.dt_venda = dt_venda;
@@ -62,6 +64,7 @@ public class PedidosOrc implements ImetodosPadrao {
         this.ped_orcFone = ped_orcFone;
         this.ped_orcEmail = ped_orcEmail;
         this.ped_orcContato = ped_orcContato;
+        this.ped_orcNum = ped_orcNum;
     }
 
     public String getPed_orcNome() {
@@ -238,6 +241,14 @@ public class PedidosOrc implements ImetodosPadrao {
 
     public void setPed_tipo(String ped_tipo) {
         this.ped_tipo = ped_tipo;
+    }
+
+    public int getPed_orcNum() {
+        return ped_orcNum;
+    }
+
+    public void setPed_orcNum(int ped_orcNum) {
+        this.ped_orcNum = ped_orcNum;
     }
 
     @Override
